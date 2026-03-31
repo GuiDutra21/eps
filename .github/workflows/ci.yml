@@ -22,12 +22,16 @@ jobs:
 
       - name: Instalar dependências
         run: poetry install
+        working-directory: ./my_project
 
       - name: Rodar Bandit
         run: poetry run bandit -r config
+        working-directory: ./my_project
 
       - name: Rodar Ruff
         run: poetry run ruff check .
+        working-directory: ./my_project
 
       - name: Rodar Safety
         run: poetry run safety check
+        working-directory: ./my_project
