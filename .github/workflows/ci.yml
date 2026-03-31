@@ -1,0 +1,33 @@
+name: DevSecOps CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Instalar Poetry
+        run: pip install poetry
+
+      - name: Instalar dependências
+        run: poetry install
+
+      - name: Rodar Bandit
+        run: poetry run bandit -r config
+
+      - name: Rodar Ruff
+        run: poetry run ruff check .
+
+      - name: Rodar Safety
+        run: poetry run safety check
